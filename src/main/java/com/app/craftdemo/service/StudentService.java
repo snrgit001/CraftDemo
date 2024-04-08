@@ -17,27 +17,63 @@ public class StudentService {
 	@Autowired
 	private StudentRepo repository;
 	
-	public Student saveStudent(StudentDTO studentRequest) {
+	public Student addStudent(StudentDTO studentRequest) throws Exception {
+		Student student = Student.builder().studentId(Long.parseLong("0")).firstName(studentRequest.getFirstName())
+		.lastName(studentRequest.getLastName()).dateOfBirth(studentRequest.getDateOfBirth())
+		.email(studentRequest.getEmail()).enrolledActive(studentRequest.getEnrolledActive()).build();
 		
-		Student Student = com.app.craftdemo.entity.Student.build(Long.parseLong("0"), studentRequest.getFirstName(), studentRequest.getLastName(), studentRequest.getDateOfBirth(),  studentRequest.getEmail(), studentRequest.getEnrolledActive());
-		return repository.save(Student);
+		return repository.save(student);
 	}
 	
-	public List<Student> getAllStudents() {
-		return repository.findAll();
-		
+	public List<Student> getAllStudents() throws Exception {
+		List<Student> studentList = null;
+		studentList = repository.findAll();
+		if(studentList.isEmpty()) {
+			throw new StudentNotFoundException("Students Not Found");
+		}
+		return studentList;		
 	}
 	
-	public Optional<Student> getStudent(Long id) throws StudentNotFoundException {
+	public Student getStudent(Long id) throws StudentNotFoundException, Exception {
 		
 		 Optional<Student> student = repository.findById(id);
 		 
 		 if(student.isPresent()) {
-			 return student;
+			 return student.get();
 		 }else {
-			throw new StudentNotFoundException("Student not found with Id : "+id); 
+			throw new StudentNotFoundException("Student not found with Id : "+id); 	 
 		 }
 		
 	}
+	
+	public Student updateStudent(Long id, StudentDTO studentRequest) throws StudentNotFoundException{
+		
+		 Optional<Student> student = repository.findById(id);
+		 
+		 if(student.isPresent()) {
+			 Student newStudent = student.get();
+			 newStudent.setFirstName(studentRequest.getFirstName());
+			 newStudent.setLastName(studentRequest.getLastName());
+			 newStudent.setDateOfBirth(studentRequest.getDateOfBirth());
+			 newStudent.setEmail(studentRequest.getEmail());
+			 newStudent.setEnrolledActive(studentRequest.getEnrolledActive());
+			 return repository.save(newStudent);
+		 }else {
+			throw new StudentNotFoundException("Student not found with Id : "+id); 	 
+		 }
+		
+	}
+	
+	public void deleteStudent(Long id) throws StudentNotFoundException, Exception {
+		Optional<Student> student = repository.findById(id);
+		 
+		 if(student.isPresent()) {
+			 repository.deleteById(id);
+		 }else {
+			 throw new StudentNotFoundException("Student not found with Id : "+id); 	 
+		 }
+		 
+	}
+
 
 }

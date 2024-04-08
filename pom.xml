@@ -14,9 +14,7 @@
 	<name>craftdemo</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>8</java.version>
-		<maven.compiler.target>1.8</maven.compiler.target>
-    	<maven.compiler.source>1.8</maven.compiler.source>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -60,16 +58,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<source>1.8</source>
-            		<target>1.8</target>
+				<!--<configuration>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
-				</configuration>
+				</configuration>-->
 			</plugin>
 		</plugins>
 	</build>

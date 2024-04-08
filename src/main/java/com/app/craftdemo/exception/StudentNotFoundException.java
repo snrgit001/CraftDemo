@@ -1,15 +1,16 @@
 package com.app.craftdemo.exception;
 
-import lombok.Getter;
-
-@Getter
 public class StudentNotFoundException extends Exception{
 	
-	//String message = "";
+	private static final long serialVersionUID = 100001L;
+	public StudentNotFoundException() {
+		super();
+	}
 	public StudentNotFoundException(String message) {
 		super(message);
-		//this.message = message;
 	}
-
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 }

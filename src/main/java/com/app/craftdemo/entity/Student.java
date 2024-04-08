@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table (name= "STUDENTS")
-@NoArgsConstructor
-@AllArgsConstructor(staticName = "build")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Student {
 	
@@ -25,5 +25,4 @@ public class Student {
 	private String dateOfBirth;
 	private String email;	
 	private String enrolledActive;
-
 }
